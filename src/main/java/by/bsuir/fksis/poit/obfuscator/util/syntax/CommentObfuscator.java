@@ -26,6 +26,8 @@ public class CommentObfuscator extends AbstractObfuscator {
 
     public void obfuscate(StateClass stateClass) {
         removeCommentVisitor.visit(stateClass.getCompilationUnit(), null);
-        next.obfuscate(stateClass);
+        if (next != null) {
+            next.obfuscate(stateClass);
+        }
     }
 }

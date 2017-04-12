@@ -26,6 +26,8 @@ public class DebuggerInfObfuscator extends AbstractObfuscator {
 
     public void obfuscate(StateClass stateClass) {
         removeJavaDocVisitor.visit(stateClass.getCompilationUnit(), null);
-        next.obfuscate(stateClass);
+        if (next != null) {
+            next.obfuscate(stateClass);
+        }
     }
 }

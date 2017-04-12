@@ -22,5 +22,8 @@ public class SpaceObfuscator extends AbstractObfuscator {
         String content = stateClass.getContent().replaceAll("[\\s]{2,}", " ");
         content = content.replaceAll("\\n", " ");
         stateClass.setContent(content);
+        if (next != null) {
+            next.obfuscate(stateClass);
+        }
     }
 }

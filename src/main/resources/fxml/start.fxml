@@ -25,7 +25,8 @@
                           onAction="#handleJavaDocCheckbox" text="Удалить JavaDoc"/>
                 <CheckBox fx:id="removeSpaceCheckbox" layoutX="294.0" layoutY="110.0" mnemonicParsing="false"
                           onAction="#handleSpaceObfuscator" text="Удалить форматирование"/>
-                <Button layoutX="294.0" layoutY="234.0" mnemonicParsing="false" text="Обфусцировать"/>
+                <Button fx:id="obfuscateButton" layoutX="294.0" layoutY="234.0" mnemonicParsing="false"
+                        onAction="#handleObfuscateButton" text="Обфусцировать"/>
             </children>
         </Pane>
     </children>
