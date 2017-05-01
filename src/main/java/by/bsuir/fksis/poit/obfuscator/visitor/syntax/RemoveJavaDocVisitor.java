@@ -1,4 +1,4 @@
-package by.bsuir.fksis.poit.obfuscator.visitor;
+package by.bsuir.fksis.poit.obfuscator.visitor.syntax;
 
 import com.github.javaparser.ast.comments.JavadocComment;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;

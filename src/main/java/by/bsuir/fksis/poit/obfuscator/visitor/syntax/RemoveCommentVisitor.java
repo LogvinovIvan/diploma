@@ -1,4 +1,4 @@
-package by.bsuir.fksis.poit.obfuscator.visitor;
+package by.bsuir.fksis.poit.obfuscator.visitor.syntax;
 
 import com.github.javaparser.ast.comments.BlockComment;
 import com.github.javaparser.ast.comments.LineComment;

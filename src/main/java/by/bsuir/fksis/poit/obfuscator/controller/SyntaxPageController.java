@@ -54,6 +54,7 @@ public class SyntaxPageController {
         File file = directoryChooser.showDialog(new Stage());
         System.out.print(file.getAbsolutePath());
 
+
         try {
             filesInFolder = Files.walk(Paths.get(file.getAbsolutePath()))
                     .filter(Files::isRegularFile)

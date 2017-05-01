@@ -6,8 +6,10 @@ package by.bsuir.fksis.poit.obfuscator;
 public class test {
 
 
+
+
     // test integer
-            private Integer i;
+
 
     public test() {
     }
@@ -22,6 +24,9 @@ public class test {
 
     public void setI(Integer i) {
         this.i = i;
+
+
+
     }
 
     @Override
@@ -35,8 +40,25 @@ public class test {
 
     }
 
+    private Integer i;
+
     @Override
     public int hashCode() {
         return i != null ? i.hashCode() : 0;
     }
+
+
+
+
+
 }
+
+
+class A{
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+}
+
+

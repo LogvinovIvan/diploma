@@ -3,7 +3,7 @@ package by.bsuir.fksis.poit.obfuscator.util.syntax;
 import by.bsuir.fksis.poit.obfuscator.config.PriorityObfuscatorLevel;
 import by.bsuir.fksis.poit.obfuscator.state.StateClass;
 import by.bsuir.fksis.poit.obfuscator.util.AbstractObfuscator;
-import by.bsuir.fksis.poit.obfuscator.visitor.RemoveJavaDocVisitor;
+import by.bsuir.fksis.poit.obfuscator.visitor.syntax.RemoveJavaDocVisitor;
 
 /**
  * Created by Иван on 08.04.2017.
