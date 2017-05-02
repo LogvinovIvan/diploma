@@ -11,6 +11,7 @@ import com.github.javaparser.symbolsolver.model.methods.MethodUsage;
 import com.github.javaparser.symbolsolver.model.typesystem.Type;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Иван on 15.04.2017.
@@ -107,12 +108,17 @@ public class ApplierMethodVisitor extends VoidVisitorAdapter<JavaParserFacade> {
     public void visit(MethodCallExpr methodCallExpr, JavaParserFacade facade) {
         try {
             String methodFullName = facade.solve(methodCallExpr).getCorrespondingDeclaration().getQualifiedSignature();
-            if (methodCallExpr.getNameAsString().equals("chain")) {
-                System.out.println(methodCallExpr);
-            }
             if (mapOfMethods.keySet().contains(methodFullName)) {
                 methodCallExpr.setName(mapOfMethods.get(methodFullName));
             }
+            List<MethodCallExpr> callExprs = methodCallExpr.getChildNodes()
+                    .stream()
+                    .filter(node -> node instanceof MethodCallExpr)
+                    .map(node -> {return (MethodCallExpr)node;})
+                    .collect(Collectors.toList());
+            callExprs.forEach(callExpr->{
+                visit(callExpr, facade);
+            });
         } catch (RuntimeException e) {
             System.out.println(methodCallExpr);
         }

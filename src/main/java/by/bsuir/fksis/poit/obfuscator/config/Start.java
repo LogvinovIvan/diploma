@@ -36,14 +36,12 @@ public class Start {
     public static void main(String[] args) throws IOException {
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
 
-        FileInputStream fileInputStream = new FileInputStream("B:\\epam\\test project\\epamJavaParser\\src\\by\\bsuir\\textparser\\composite\\CompositeElement.java");
-        File src = new File("B:\\epam\\test project\\epamJavaParser\\src");
+        File src = new File("C:\\Ivan Lohvinau\\diploma\\test\\epamJavaParser\\src");
         TypeSolver typeSolver = new CombinedTypeSolver(new ReflectionTypeSolver(),
-                new JavaParserTypeSolver(new File("B:\\epam\\test project\\epamJavaParser\\src")),
-                new JarTypeSolver("B:\\epam\\test project\\epamJavaParser\\lib\\log4j-1.2.17.jar")
+                new JavaParserTypeSolver(new File("C:\\Ivan Lohvinau\\diploma\\test\\epamJavaParser\\src")),
+                new JarTypeSolver("C:\\Ivan Lohvinau\\diploma\\test\\epamJavaParser\\lib\\log4j-1.2.17.jar")
         );
 
-        FileInputStream fileInputStream1 = new FileInputStream("B:\\epam\\test project\\epamJavaParser\\src\\by\\bsuir\\textparser\\parser\\TextParser.java");
 
 
         List<File> files = Files.walk(Paths.get(src.getAbsolutePath()))
