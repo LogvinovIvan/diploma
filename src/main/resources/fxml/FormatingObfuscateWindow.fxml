@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<AnchorPane prefHeight="329.0" prefWidth="476.0" xmlns="http://javafx.com/javafx/8.0.112"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.FormatingObfuscateWindow">
+    <children>
+        <Pane layoutY="1.0" prefHeight="329.0" prefWidth="476.0">
+            <children>
+                <CheckBox layoutX="48.0" layoutY="184.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="103.0"
+                          text="Порядок блоков"/>
+                <CheckBox layoutX="51.0" layoutY="65.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="124.0"
+                          text="Удалить Java Doc"/>
+                <CheckBox layoutX="47.0" layoutY="114.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="169.0"
+                          text="Удалить форматирование"/>
+                <CheckBox layoutX="48.0" layoutY="156.0" mnemonicParsing="false" text="Удалить коментарий"/>
+                <Button layoutX="58.0" layoutY="241.0" mnemonicParsing="false" text="Дальше"/>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

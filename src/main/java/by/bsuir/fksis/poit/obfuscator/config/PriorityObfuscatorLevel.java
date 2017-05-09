@@ -4,7 +4,7 @@ package by.bsuir.fksis.poit.obfuscator.config;
  * Created by Иван on 09.04.2017.
  */
 public enum PriorityObfuscatorLevel {
-    LOW(1), MIDDLE(2), HIGH(3);
+    LOW(1), MIDDLE(2), HIGH(3), SUPER_HIGH(4);
 
     private int level;
 

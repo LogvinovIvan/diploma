@@ -32,11 +32,12 @@ public class ConvertedClassInf {
     }
 
     private Map<String, String> mapSimpleNameMethod = new HashMap<>();
+    private HashMap<String, Boolean> markerIsStaticmethod = new HashMap<>();
 
 
     public ConvertedClassInf(List<LexicalClassNameInf> lexicalClassNameInfList) {
         for (LexicalClassNameInf classNameInf : lexicalClassNameInfList) {
-            mapClass.put(classNameInf.getOldClassName(), classNameInf.getNewClassName());
+            mapClass.put(classNameInf.getOldFullName(), classNameInf.getNewClassName());
             mapFullClassName.put(classNameInf.getOldFullName(), classNameInf.getNewFullName());
 
             for (Map.Entry<String, String> entryMethod : classNameInf.getMethods().entrySet()) {
@@ -44,6 +45,8 @@ public class ConvertedClassInf {
                 mapSimpleNameMethod.put(entryMethod.getKey(), entryMethod.getValue());
 
             }
+
+            markerIsStaticmethod.putAll(classNameInf.getMethodsIsStatic());
 
 
             for (Map.Entry<String, String> entryField : classNameInf.getFields().entrySet()) {
@@ -103,6 +106,14 @@ public class ConvertedClassInf {
 
     public Map<String, String> getMapFieldsMethod() {
         return mapFieldsMethod;
+    }
+
+    private boolean isStaticMethod(String signature) {
+        return markerIsStaticmethod.containsKey(signature);
+    }
+
+    public Map<String, Boolean> getStaticMethodMarkerMap() {
+        return markerIsStaticmethod;
     }
 
 

@@ -12,6 +12,7 @@ public class LexicalClassNameInf {
     private String fullName;
 
     private HashMap<String, String> methods = new HashMap<>();
+    private HashMap<String, Boolean> methodsIsStatic = new HashMap<>();
     private HashMap<String, String> fields = new HashMap<>();
 
 
@@ -70,6 +71,10 @@ public class LexicalClassNameInf {
         methods.put(oldSignature, newSignature);
     }
 
+    public void setStaticMarkerForMethod(String methodName, Boolean isStatic) {
+        methodsIsStatic.put(methodName, isStatic);
+    }
+
 
     public String getFullName() {
         return fullName;
@@ -77,5 +82,9 @@ public class LexicalClassNameInf {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public HashMap<String, Boolean> getMethodsIsStatic() {
+        return methodsIsStatic;
     }
 }

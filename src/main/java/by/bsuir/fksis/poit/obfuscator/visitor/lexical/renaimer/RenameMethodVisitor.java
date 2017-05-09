@@ -79,12 +79,14 @@ public class RenameMethodVisitor extends VoidVisitorAdapter<JavaParserFacade> {
                 String oldSignature = usage.getQualifiedSignature();
                 String newMethodName = RandomStringUtils.randomAlphabetic(METHOD_LENGTH_NAME);
                 lexicalClassNameInf.addMethods(oldSignature, newMethodName);
+                lexicalClassNameInf.setStaticMarkerForMethod(oldSignature, methodDeclaration.isStatic());
             } else {
                 MethodUsage parent = methodUsages.stream()
                         .filter(methodUsage -> new MethodUsageComparator().compare(methodUsage, usage) == 0).findFirst().get();
                 String parentSignature = "override:" + parent.getQualifiedSignature();
                 String oldSignature = usage.getQualifiedSignature();
                 lexicalClassNameInf.addMethods(oldSignature, parentSignature);
+                lexicalClassNameInf.setStaticMarkerForMethod(oldSignature, methodDeclaration.isStatic());
             }
         } else if (!methodsOfClassObject.contains(methodDeclaration.getNameAsString())) {
             List<Type> types = new ArrayList<>();
@@ -102,6 +104,7 @@ public class RenameMethodVisitor extends VoidVisitorAdapter<JavaParserFacade> {
             String parentSignature = "override:" + parent.getQualifiedSignature();
             String oldSignature = usage.getQualifiedSignature();
             lexicalClassNameInf.addMethods(oldSignature, parentSignature);
+            lexicalClassNameInf.setStaticMarkerForMethod(oldSignature, methodDeclaration.isStatic());
 
         }
 

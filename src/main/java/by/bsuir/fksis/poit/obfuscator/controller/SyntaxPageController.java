@@ -5,6 +5,7 @@ import by.bsuir.fksis.poit.obfuscator.util.AbstractObfuscator;
 import by.bsuir.fksis.poit.obfuscator.util.ObfuscatorComparator;
 import by.bsuir.fksis.poit.obfuscator.util.syntax.CommentObfuscator;
 import by.bsuir.fksis.poit.obfuscator.util.syntax.DebuggerInfObfuscator;
+import by.bsuir.fksis.poit.obfuscator.util.syntax.OrderBlockObfuscator;
 import by.bsuir.fksis.poit.obfuscator.util.syntax.SpaceObfuscator;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
@@ -30,7 +31,7 @@ import java.util.stream.Collectors;
  */
 public class SyntaxPageController {
 
-    private TreeSet<AbstractObfuscator> abstractObfuscatorPriorityQueue = new TreeSet<>(new ObfuscatorComparator());
+    private TreeSet<AbstractObfuscator> abstractObfuscatorPrioritySet = new TreeSet<>(new ObfuscatorComparator());
     private List<File> filesInFolder;
 
     @FXML
@@ -46,6 +47,9 @@ public class SyntaxPageController {
 
     @FXML
     private CheckBox removeSpaceCheckbox = new CheckBox();
+
+    @FXML
+    private CheckBox changeOrderCheckBox = new CheckBox();
 
 
     @FXML
@@ -64,14 +68,14 @@ public class SyntaxPageController {
         } catch (IOException e) {
 
         }
-
-
     }
 
     @FXML
     private void handleRemoveComment(ActionEvent event) {
         if (removeCommentCheckbox.isSelected()) {
-            abstractObfuscatorPriorityQueue.add(new CommentObfuscator());
+            abstractObfuscatorPrioritySet.add(new CommentObfuscator());
+        } else {
+            abstractObfuscatorPrioritySet.removeIf(obfuscator -> obfuscator instanceof CommentObfuscator);
         }
 
     }
@@ -79,7 +83,9 @@ public class SyntaxPageController {
     @FXML
     private void handleJavaDocCheckbox(ActionEvent event) {
         if (removeJavaDocCheckbox.isSelected()) {
-            abstractObfuscatorPriorityQueue.add(new DebuggerInfObfuscator());
+            abstractObfuscatorPrioritySet.add(new DebuggerInfObfuscator());
+        } else {
+            abstractObfuscatorPrioritySet.removeIf(obfuscator -> obfuscator instanceof DebuggerInfObfuscator);
         }
 
     }
@@ -87,7 +93,9 @@ public class SyntaxPageController {
     @FXML
     private void handleSpaceObfuscator(ActionEvent event) {
         if (removeSpaceCheckbox.isSelected()) {
-            abstractObfuscatorPriorityQueue.add(new SpaceObfuscator());
+            abstractObfuscatorPrioritySet.add(new SpaceObfuscator());
+        } else {
+            abstractObfuscatorPrioritySet.removeIf(obfuscator -> obfuscator instanceof SpaceObfuscator);
         }
     }
 
@@ -104,15 +112,29 @@ public class SyntaxPageController {
         }
     }
 
+    @FXML
+    public void handleOrderObfuscateCheckBox(ActionEvent event) {
+        if (changeOrderCheckBox.isSelected()) {
+            abstractObfuscatorPrioritySet.add(new OrderBlockObfuscator());
+        } else {
+            abstractObfuscatorPrioritySet.removeIf(obfuscator -> obfuscator instanceof OrderBlockObfuscator);
+        }
+    }
+
     private AbstractObfuscator createChain() {
-        AbstractObfuscator result = abstractObfuscatorPriorityQueue.pollFirst();
+        AbstractObfuscator result = abstractObfuscatorPrioritySet.pollFirst();
         AbstractObfuscator prev = result;
-        for (AbstractObfuscator abstractObfuscator : abstractObfuscatorPriorityQueue) {
+        for (AbstractObfuscator abstractObfuscator : abstractObfuscatorPrioritySet) {
             prev.setNext(abstractObfuscator);
             prev = abstractObfuscator;
         }
 
         return result;
+    }
+
+    @FXML
+    public void handleNextButton(ActionEvent event) {
+
     }
 
 

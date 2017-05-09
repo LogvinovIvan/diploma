@@ -3,14 +3,19 @@ package by.bsuir.fksis.poit.obfuscator.config;
 import by.bsuir.fksis.poit.obfuscator.state.lexical.ConvertedClassInf;
 import by.bsuir.fksis.poit.obfuscator.state.lexical.LexicalClassNameInf;
 import by.bsuir.fksis.poit.obfuscator.visitor.lexical.applier.ApplierFieldVisitor;
+import by.bsuir.fksis.poit.obfuscator.visitor.lexical.applier.ApplierImportVisitor;
 import by.bsuir.fksis.poit.obfuscator.visitor.lexical.applier.ApplierMethodVisitor;
+import by.bsuir.fksis.poit.obfuscator.visitor.lexical.applier.ApplierRenameClassVisitor;
 import by.bsuir.fksis.poit.obfuscator.visitor.lexical.renaimer.RenameClassVisitor;
 import by.bsuir.fksis.poit.obfuscator.visitor.lexical.renaimer.RenameFieldVisitor;
 import by.bsuir.fksis.poit.obfuscator.visitor.lexical.renaimer.RenameMethodVisitor;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.comments.JavadocComment;
+import com.github.javaparser.ast.nodeTypes.NodeWithModifiers;
+import com.github.javaparser.ast.nodeTypes.NodeWithSimpleName;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.symbolsolver.javaparsermodel.JavaParserFacade;
 import com.github.javaparser.symbolsolver.model.resolution.TypeSolver;
@@ -18,8 +23,12 @@ import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSol
 import com.github.javaparser.symbolsolver.resolution.typesolvers.JarTypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.JavaParserTypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.ReflectionTypeSolver;
+import org.apache.commons.lang.StringUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,12 +45,11 @@ public class Start {
     public static void main(String[] args) throws IOException {
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
 
-        File src = new File("C:\\Ivan Lohvinau\\diploma\\test\\epamJavaParser\\src");
+        File src = new File("B:\\epam\\test project\\epamJavaParser\\src");
         TypeSolver typeSolver = new CombinedTypeSolver(new ReflectionTypeSolver(),
-                new JavaParserTypeSolver(new File("C:\\Ivan Lohvinau\\diploma\\test\\epamJavaParser\\src")),
-                new JarTypeSolver("C:\\Ivan Lohvinau\\diploma\\test\\epamJavaParser\\lib\\log4j-1.2.17.jar")
+                new JavaParserTypeSolver(new File("B:\\epam\\test project\\epamJavaParser\\src")),
+                new JarTypeSolver("B:\\epam\\test project\\epamJavaParser\\lib\\log4j-1.2.17.jar")
         );
-
 
 
         List<File> files = Files.walk(Paths.get(src.getAbsolutePath()))
@@ -74,14 +82,18 @@ public class Start {
             try {
                 CompilationUnit compilationUnit = JavaParser.parse(file);
                 applyChangesToCU(compilationUnit, JavaParserFacade.get(typeSolver), convertedClassInf);
-                FileOutputStream fileOutputStream = new FileOutputStream(file);
-                fileOutputStream.write(compilationUnit.toString().getBytes());
-                fileOutputStream.close();
+                saveResult(compilationUnit, file.getPath());
+//                FileOutputStream fileOutputStream = new FileOutputStream("B:\\epam\\result\\"+file.getName());
+//                fileOutputStream.write(compilationUnit.toString().getBytes());
+//                fileOutputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
 
+    }
+
+    private static void saveResult() {
     }
 
 
@@ -150,17 +162,53 @@ public class Start {
     private static void applyChangesToCU(CompilationUnit compilationUnit, JavaParserFacade facade, ConvertedClassInf convertedClassInf) {
 
 
-        ApplierMethodVisitor applierMethodVisitor = new ApplierMethodVisitor((HashMap<String, String>) convertedClassInf.getMapSimpleNameMethod());
+        ApplierMethodVisitor applierMethodVisitor = new ApplierMethodVisitor((HashMap<String, String>) convertedClassInf.getMapSimpleNameMethod(), convertedClassInf.getStaticMethodMarkerMap(), convertedClassInf);
         compilationUnit.accept(applierMethodVisitor, facade);
 
         ApplierFieldVisitor applierFieldVisitor = new ApplierFieldVisitor(convertedClassInf);
         compilationUnit.accept(applierFieldVisitor, facade);
 
-//        ApplierRenameClassVisitor applierRenameClassVisitor = new ApplierRenameClassVisitor(convertedClassInf);
-//        compilationUnit.accept(applierRenameClassVisitor, facade);
+        ApplierRenameClassVisitor applierRenameClassVisitor = new ApplierRenameClassVisitor(convertedClassInf);
+        compilationUnit.accept(applierRenameClassVisitor, facade);
+
+        ApplierImportVisitor applierImportVisitor = new ApplierImportVisitor(convertedClassInf);
+        compilationUnit.accept(applierImportVisitor, facade);
 
 
     }
 
+
+    private static void saveResult(CompilationUnit compilationUnit, String dest) throws IOException {
+        dest = dest.replaceAll("test project", "result");
+        String pathDir = dest.replaceAll("\\\\(?:.(?!\\\\))+$", StringUtils.EMPTY);
+
+        String newFileName = definePublicClassName(compilationUnit);
+        if (!newFileName.isEmpty()) {
+            newFileName = "\\" + newFileName + ".java";
+            dest = pathDir + newFileName;
+        }
+
+        Path path = Paths.get(dest);
+
+        Files.createDirectories(Paths.get(pathDir));
+
+        File file = new File(dest);
+        file.createNewFile();
+
+
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        fileOutputStream.write(compilationUnit.toString().getBytes());
+        fileOutputStream.close();
+    }
+
+
+    private static String definePublicClassName(CompilationUnit compilationUnit) {
+        List<ClassOrInterfaceDeclaration> declarations = compilationUnit.getNodesByType(ClassOrInterfaceDeclaration.class);
+        return declarations.stream()
+                .filter(NodeWithModifiers::isPublic)
+                .findFirst()
+                .map(NodeWithSimpleName::getNameAsString)
+                .orElse(StringUtils.EMPTY);
+    }
 
 }
