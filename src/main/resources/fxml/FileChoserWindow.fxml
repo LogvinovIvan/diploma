@@ -13,7 +13,7 @@
                         text="Next"/>
                 <TextField fx:id="srcPathText" layoutX="221.0" layoutY="67.0" prefHeight="25.0" prefWidth="290.0"/>
                 <Button fx:id="buttonChoseSrcFile" layoutX="32.0" layoutY="67.0" mnemonicParsing="false"
-                        onAction="#handlebuttonChooseSrcPath" prefHeight="25.0" prefWidth="154.0"
+                        onAction="#handleButtonChooseSrcPath" prefHeight="25.0" prefWidth="154.0"
                         text="Choose Source Code Files"/>
                 <TextField fx:id="libPathText" layoutX="221.0" layoutY="118.0" prefHeight="25.0" prefWidth="290.0"/>
                 <Button fx:id="buttonChooseLibFile" layoutX="33.0" layoutY="118.0" mnemonicParsing="false"

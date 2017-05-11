@@ -51,11 +51,12 @@ public class FileChooserController {
 
 
     @FXML
-    private void handlebuttonChooseSrcPath(ActionEvent event) {
+    private void handleButtonChooseSrcPath(ActionEvent event) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File file = directoryChooser.showDialog(new Stage());
         srcPath = file.getAbsolutePath();
         srcPathText.setText(savePath);
+        srcPathText.setDisable(true);
         Connector.setSrc(srcPath);
     }
 

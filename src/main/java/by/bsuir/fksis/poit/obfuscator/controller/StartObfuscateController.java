@@ -56,9 +56,10 @@ public class StartObfuscateController {
     }
 
     private static void saveResult(CompilationUnit compilationUnit, String dest) throws IOException {
-        String pack = dest.replaceAll(".+?src", "");
-        dest = dest.replaceAll("test project", "result");
-        String pathDir = dest.replaceAll("\\\\(?:.(?!\\\\))+$", StringUtils.EMPTY);
+        String pack = compilationUnit.getPackageDeclaration().get().getNameAsString();
+        pack = pack.replaceAll("\\.", "\\");
+        dest += pack;
+        String pathDir = dest;
 
         String newFileName = definePublicClassName(compilationUnit);
         if (!newFileName.isEmpty()) {
