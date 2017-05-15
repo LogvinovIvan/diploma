@@ -11,6 +11,9 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.stage.DirectoryChooser;
@@ -51,6 +54,8 @@ public class SyntaxPageController {
     @FXML
     private CheckBox changeOrderCheckBox = new CheckBox();
 
+    @FXML
+    private Button nextWindowButton = new Button();
 
     @FXML
     private void handlebuttonChooseFile(ActionEvent event) {
@@ -133,8 +138,16 @@ public class SyntaxPageController {
     }
 
     @FXML
-    public void handleNextButton(ActionEvent event) {
+    public void handleNextButton(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/LexicalObfuscateWindow.fxml"));
 
+        Stage currentStage = (Stage) nextWindowButton.getScene().getWindow();
+        currentStage.close();
+
+        Stage stage = new Stage();
+        stage.setTitle("Formating obfuscate config ");
+        stage.setScene(new Scene(root, 500, 500));
+        stage.show();
     }
 
 

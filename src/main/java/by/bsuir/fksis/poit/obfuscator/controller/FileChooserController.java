@@ -55,7 +55,7 @@ public class FileChooserController {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File file = directoryChooser.showDialog(new Stage());
         srcPath = file.getAbsolutePath();
-        srcPathText.setText(savePath);
+        srcPathText.setText(srcPath);
         srcPathText.setDisable(true);
         Connector.setSrc(srcPath);
     }
@@ -84,11 +84,13 @@ public class FileChooserController {
         if (checkDefaultSaveDir.isSelected()) {
             savePathText.setText(srcPath);
             savePathText.setDisable(true);
+            buttonChooseSavePath.setDisable(true);
             savePath = srcPath;
 
         } else {
             savePathText.setText(StringUtils.EMPTY);
             savePathText.setDisable(false);
+            buttonChooseSavePath.setDisable(false);
             savePath = StringUtils.EMPTY;
 
         }
@@ -98,6 +100,10 @@ public class FileChooserController {
     @FXML
     public void handleNextButton(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/FormatingObfuscateWindow.fxml"));
+
+        Stage currentStage = (Stage) savePathText.getScene().getWindow();
+        currentStage.close();
+
         Stage stage = new Stage();
         stage.setTitle("Formating obfuscate config ");
         stage.setScene(new Scene(root, 500, 500));

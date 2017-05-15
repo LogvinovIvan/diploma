@@ -12,6 +12,8 @@ public class MethodUsageComparator implements Comparator<MethodUsage> {
 
     @Override
     public int compare(MethodUsage o1, MethodUsage o2) {
+        String name1 = o1.getName();
+        String name2 = o2.getName();
         if (o1.getName().equals(o2.getName())) {
             if (o1.getParamTypes().size() == o2.getParamTypes().size()) {
                 for (int i = 0; i < o1.getParamTypes().size(); i++) {

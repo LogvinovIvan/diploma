@@ -1,28 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.76-ea"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="by.bsuir.fksis.poit.obfuscator.controller.FileChooserController">
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="by.bsuir.fksis.poit.obfuscator.controller.FileChooserController">
     <children>
         <Pane layoutX="-8.0" prefHeight="400.0" prefWidth="600.0">
             <children>
-                <Button layoutX="457.0" layoutY="338.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0"
-                        text="Next"/>
-                <TextField fx:id="srcPathText" layoutX="221.0" layoutY="67.0" prefHeight="25.0" prefWidth="290.0"/>
-                <Button fx:id="buttonChoseSrcFile" layoutX="32.0" layoutY="67.0" mnemonicParsing="false"
-                        onAction="#handleButtonChooseSrcPath" prefHeight="25.0" prefWidth="154.0"
-                        text="Choose Source Code Files"/>
-                <TextField fx:id="libPathText" layoutX="221.0" layoutY="118.0" prefHeight="25.0" prefWidth="290.0"/>
-                <Button fx:id="buttonChooseLibFile" layoutX="33.0" layoutY="118.0" mnemonicParsing="false"
-                        onAction="#handleButtonLibPath" prefHeight="25.0" prefWidth="154.0" text="Choose Library Dir"/>
-                <Button fx:id="buttonChooseSavePath" layoutX="33.0" layoutY="157.0" mnemonicParsing="false"
-                        onAction="#handleButtonSavePath" prefHeight="25.0" prefWidth="154.0" text="Save to"/>
-                <TextField fx:id="savePathText" layoutX="221.0" layoutY="157.0" prefHeight="25.0" prefWidth="290.0"/>
-                <CheckBox fx:id="checkDefaultSaveDir" layoutX="33.0" layoutY="220.0" mnemonicParsing="false"
-                          onAction="#handleDefaultPath" text="save to current folder"/>
+                <Button layoutX="457.0" layoutY="338.0" mnemonicParsing="false" onAction="#handleNextButton" prefHeight="25.0" prefWidth="107.0" text="Next" />
+                <TextField fx:id="srcPathText" layoutX="221.0" layoutY="67.0" prefHeight="25.0" prefWidth="290.0" />
+                <Button fx:id="buttonChoseSrcFile" layoutX="32.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleButtonChooseSrcPath" prefHeight="25.0" prefWidth="154.0" text="Choose Source Code Files" />
+                <TextField fx:id="libPathText" layoutX="221.0" layoutY="118.0" prefHeight="25.0" prefWidth="290.0" />
+                <Button fx:id="buttonChooseLibFile" layoutX="33.0" layoutY="118.0" mnemonicParsing="false" onAction="#handleButtonLibPath" prefHeight="25.0" prefWidth="154.0" text="Choose Library Dir" />
+                <Button fx:id="buttonChooseSavePath" layoutX="33.0" layoutY="157.0" mnemonicParsing="false" onAction="#handleButtonSavePath" prefHeight="25.0" prefWidth="154.0" text="Save to" />
+                <TextField fx:id="savePathText" layoutX="221.0" layoutY="157.0" prefHeight="25.0" prefWidth="290.0" />
+                <CheckBox fx:id="checkDefaultSaveDir" layoutX="33.0" layoutY="220.0" mnemonicParsing="false" onAction="#handleDefaultPath" text="save to current folder" />
             </children>
         </Pane>
     </children>
