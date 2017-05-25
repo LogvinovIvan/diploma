@@ -6,7 +6,7 @@ import by.bsuir.fksis.poit.obfuscator.state.StateClass;
 /**
  * Created by Иван on 08.04.2017.
  */
-public abstract class AbstractObfuscator {
+public abstract class AbstractObfuscator implements IAbstractObfuscator {
 
     protected PriorityObfuscatorLevel level;
     protected AbstractObfuscator next;

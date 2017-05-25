@@ -1,13 +1,14 @@
 package by.bsuir.fksis.poit.obfuscator.visitor.lexical.applier;
 
 import by.bsuir.fksis.poit.obfuscator.state.lexical.ConvertedClassInf;
+import by.bsuir.fksis.poit.obfuscator.util.lexical.LexicalVisitorPriority;
+import by.bsuir.fksis.poit.obfuscator.visitor.lexical.AbstarctVisitor;
 import com.github.javaparser.ast.body.*;
 import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.FieldAccessExpr;
 import com.github.javaparser.ast.expr.NameExpr;
 import com.github.javaparser.ast.nodeTypes.NodeWithSimpleName;
 import com.github.javaparser.ast.stmt.BlockStmt;
-import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.symbolsolver.javaparsermodel.JavaParserFacade;
 
 import java.util.*;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Иван on 15.04.2017.
  */
-public class ApplierFieldVisitor extends VoidVisitorAdapter<JavaParserFacade> {
+public class ApplierFieldVisitor extends AbstarctVisitor {
 
     private Map<String, String> mapFields;
     private List<String> fields = new ArrayList<>();
@@ -174,4 +175,8 @@ public class ApplierFieldVisitor extends VoidVisitorAdapter<JavaParserFacade> {
         return fullClassName + fieldName;
     }
 
+    @Override
+    public LexicalVisitorPriority getPriority() {
+        return LexicalVisitorPriority.SUPERHIGH;
+    }
 }

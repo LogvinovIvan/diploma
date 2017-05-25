@@ -1,5 +1,6 @@
 package by.bsuir.fksis.poit.obfuscator.util.syntax;
 
+import by.bsuir.fksis.poit.obfuscator.config.PriorityObfuscatorLevel;
 import by.bsuir.fksis.poit.obfuscator.state.StateClass;
 import by.bsuir.fksis.poit.obfuscator.util.AbstractObfuscator;
 import com.github.javaparser.ast.NodeList;
@@ -11,10 +12,8 @@ import java.util.Collections;
  * Created by Иван on 08.04.2017.
  */
 public class OrderBlockObfuscator extends AbstractObfuscator {
-
-
-    public void obfuscate() {
-
+    {
+        level = PriorityObfuscatorLevel.LOW;
     }
 
     @Override
@@ -32,5 +31,8 @@ public class OrderBlockObfuscator extends AbstractObfuscator {
         newOrderTypes.forEach(t -> stateClass.getCompilationUnit().addType(t));
 
         System.out.print(stateClass.getCompilationUnit());
+        if (next != null) {
+            next.obfuscate(stateClass);
+        }
     }
 }

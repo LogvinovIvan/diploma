@@ -43,6 +43,6 @@ public class Connector {
     }
 
     public static void addObfuscator(AbstractObfuscator obfuscator) {
-        Connector.obfuscators = obfuscators;
+        obfuscators.add(obfuscator);
     }
 }

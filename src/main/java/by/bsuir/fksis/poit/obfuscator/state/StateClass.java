@@ -7,7 +7,7 @@ import com.github.javaparser.ast.CompilationUnit;
  */
 public class StateClass {
     private CompilationUnit compilationUnit;
-    private String content;
+    private String content = null;
 
 
     public StateClass() {
@@ -15,7 +15,6 @@ public class StateClass {
 
     public StateClass(CompilationUnit compilationUnit) {
         this.compilationUnit = compilationUnit;
-        this.content = compilationUnit.toString();
     }
 
 
@@ -28,6 +27,9 @@ public class StateClass {
     }
 
     public String getContent() {
+        if (content == null) {
+            content = compilationUnit.toString();
+        }
         return content;
     }
 

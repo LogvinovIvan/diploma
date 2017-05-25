@@ -14,6 +14,11 @@ import java.util.List;
  * Created by Иван on 09.05.2017.
  */
 public class RenameClassFactory extends LexicalFactory {
+
+    public RenameClassFactory() {
+        priority = Priority.LOW;
+    }
+
     @Override
     public List<VoidVisitorAdapter> createRenameVisitor(List<LexicalClassNameInf> lexicalClassNameInfList) {
         List<VoidVisitorAdapter> renameList = new ArrayList<>();

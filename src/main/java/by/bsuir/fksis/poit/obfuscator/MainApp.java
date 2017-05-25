@@ -2,6 +2,8 @@ package by.bsuir.fksis.poit.obfuscator;/**
  * Created by Иван on 09.04.2017.
  */
 
+import by.bsuir.fksis.poit.obfuscator.controller.WindowManager;
+import by.bsuir.fksis.poit.obfuscator.plugin.loader.PluginManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,9 +14,13 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/FileChoserWindow.fxml"));
+
+        PluginManager pluginManager = new PluginManager();
+        WindowManager.initWindowManager(pluginManager.getClasses(), pluginManager.getUrlList());
+
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/start.fxml"));
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setScene(new Scene(root, 340, 340));
         primaryStage.show();
     }
 

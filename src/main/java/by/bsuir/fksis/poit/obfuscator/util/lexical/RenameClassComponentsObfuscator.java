@@ -6,11 +6,11 @@ import by.bsuir.fksis.poit.obfuscator.state.lexical.ConvertedClassInf;
 import by.bsuir.fksis.poit.obfuscator.state.lexical.LexicalClassNameInf;
 import by.bsuir.fksis.poit.obfuscator.util.AbstractObfuscator;
 import by.bsuir.fksis.poit.obfuscator.util.lexical.factory.LexicalFactory;
+import by.bsuir.fksis.poit.obfuscator.visitor.lexical.AbstarctVisitor;
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.symbolsolver.javaparsermodel.JavaParserFacade;
-import com.github.javaparser.symbolsolver.model.resolution.TypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.JarTypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.JavaParserTypeSolver;
@@ -22,9 +22,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -36,7 +34,7 @@ public class RenameClassComponentsObfuscator extends AbstractObfuscator {
         this.level = PriorityObfuscatorLevel.SUPER_HIGH;
     }
 
-    private TreeSet<VoidVisitorAdapter> renameAdapters = new TreeSet<>();
+    private TreeSet<AbstarctVisitor> renameAdapters = new TreeSet<>();
     private JavaParserFacade facade;
     private TreeSet<LexicalFactory> factories = new TreeSet<>();
     private List<LexicalClassNameInf> lexicalClassNameInfList = new ArrayList<>();
@@ -52,7 +50,8 @@ public class RenameClassComponentsObfuscator extends AbstractObfuscator {
         this.libs = libs;
         this.factories = lexicalFactories;
         factories.forEach(lexicalFactory -> {
-            renameAdapters.addAll(lexicalFactory.createRenameVisitor(lexicalClassNameInfList));
+            List<VoidVisitorAdapter> adapters = lexicalFactory.createRenameVisitor(lexicalClassNameInfList);
+            renameAdapters.addAll(adapters.stream().map(a -> (AbstarctVisitor) a).collect(Collectors.toSet()));
         });
         this.convertedClassInf = buildMapOfDependies();
     }
@@ -82,20 +81,25 @@ public class RenameClassComponentsObfuscator extends AbstractObfuscator {
 
     private void applyChangesToCU(CompilationUnit compilationUnit, JavaParserFacade facade, ConvertedClassInf convertedClassInf) {
 
-        List<VoidVisitorAdapter> adapters = new ArrayList<>();
+        List<VoidVisitorAdapter> adapters = new LinkedList<>();
         factories.forEach(lexicalFactory ->
                 adapters.addAll(lexicalFactory.createApplierVisitor(convertedClassInf))
         );
 
-        adapters.forEach(voidVisitorAdapter -> compilationUnit.accept(voidVisitorAdapter, facade));
+        List<AbstarctVisitor> abstarctVisitors = adapters.stream().map(a -> (AbstarctVisitor) a).collect(Collectors.toList());
+        Collections.sort(abstarctVisitors);
+        Collections.sort(abstarctVisitors, Collections.reverseOrder());
+
+        abstarctVisitors.forEach(voidVisitorAdapter -> compilationUnit.accept(voidVisitorAdapter, facade));
     }
 
     private ConvertedClassInf buildMapOfDependies() throws IOException {
         File src = new File(this.src);
-        TypeSolver typeSolver = new CombinedTypeSolver(new ReflectionTypeSolver(),
-                new JavaParserTypeSolver(new File(this.src)),
-                new JarTypeSolver(this.libs)
+        CombinedTypeSolver typeSolver = new CombinedTypeSolver(new ReflectionTypeSolver(),
+                new JavaParserTypeSolver(new File(this.src))
         );
+        addJarTypeSolver(this.libs, typeSolver);
+
         this.facade = JavaParserFacade.get(typeSolver);
 
 
@@ -121,6 +125,24 @@ public class RenameClassComponentsObfuscator extends AbstractObfuscator {
             lexicalClassNameInfList.addAll(lexicalClassNameInfs);
         });
         return new ConvertedClassInf(lexicalClassNameInfList);
+    }
+
+    private void addJarTypeSolver(String pathLib, CombinedTypeSolver typeSolver) throws IOException {
+        File libPath = new File(pathLib);
+        List<String> libs = Files.walk(Paths.get(libPath.getAbsolutePath()))
+                .filter(Files::isRegularFile)
+                .map(Path::toString)
+                .collect(Collectors.toList());
+        libs.forEach(
+                l -> {
+                    try {
+                        JarTypeSolver jarTypeSolver = new JarTypeSolver(l);
+                        typeSolver.add(jarTypeSolver);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
     }
 
 

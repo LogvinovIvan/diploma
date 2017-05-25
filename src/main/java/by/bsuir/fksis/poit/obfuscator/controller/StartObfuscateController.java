@@ -1,8 +1,5 @@
 package by.bsuir.fksis.poit.obfuscator.controller;
 
-import by.bsuir.fksis.poit.obfuscator.state.StateClass;
-import by.bsuir.fksis.poit.obfuscator.util.AbstractObfuscator;
-import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.nodeTypes.NodeWithModifiers;
@@ -19,7 +16,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Иван on 09.05.2017.
@@ -29,31 +25,12 @@ public class StartObfuscateController {
     public Button obfuscateButton = new Button();
 
     public void handleObfuscateButton(ActionEvent actionEvent) throws IOException {
-        AbstractObfuscator obfuscator = createChain();
-        File file = new File(Connector.getSrc());
-        List<File> filesInFolder = Files.walk(Paths.get(file.getAbsolutePath()))
-                .filter(Files::isRegularFile)
-                .map(Path::toFile)
-                .collect(Collectors.toList());
-        for (File sicFile : filesInFolder) {
-            CompilationUnit cu = JavaParser.parse(file);
-            StateClass stateClass = new StateClass(cu);
-            obfuscator.obfuscate(stateClass);
-        }
+
 
     }
 
 
-    private AbstractObfuscator createChain() {
-        AbstractObfuscator result = Connector.getObfuscators().pollFirst();
-        AbstractObfuscator prev = result;
-        for (AbstractObfuscator abstractObfuscator : Connector.getObfuscators()) {
-            prev.setNext(abstractObfuscator);
-            prev = abstractObfuscator;
-        }
 
-        return result;
-    }
 
     private static void saveResult(CompilationUnit compilationUnit, String dest) throws IOException {
         String pack = compilationUnit.getPackageDeclaration().get().getNameAsString();

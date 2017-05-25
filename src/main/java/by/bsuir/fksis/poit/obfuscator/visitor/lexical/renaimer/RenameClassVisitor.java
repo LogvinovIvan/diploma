@@ -1,9 +1,10 @@
 package by.bsuir.fksis.poit.obfuscator.visitor.lexical.renaimer;
 
 import by.bsuir.fksis.poit.obfuscator.state.lexical.LexicalClassNameInf;
+import by.bsuir.fksis.poit.obfuscator.util.lexical.LexicalVisitorPriority;
+import by.bsuir.fksis.poit.obfuscator.visitor.lexical.AbstarctVisitor;
 import com.github.javaparser.ast.PackageDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
-import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.symbolsolver.javaparsermodel.JavaParserFacade;
 import org.apache.commons.lang.RandomStringUtils;
 
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class RenameClassVisitor extends VoidVisitorAdapter<JavaParserFacade> {
+public class RenameClassVisitor extends AbstarctVisitor {
 
     private Map<String, String> mapOfRenaimedClasses = new HashMap<>();
     private HashMap<String, String> mapMethodsName = new HashMap<>();
@@ -56,6 +57,11 @@ public class RenameClassVisitor extends VoidVisitorAdapter<JavaParserFacade> {
 //        renameTypeField(classOrInterfaceDeclaration,lexicalClassNameInf);
 
         super.visit(classOrInterfaceDeclaration, javaParserFacade);
+    }
+
+    @Override
+    public LexicalVisitorPriority getPriority() {
+        return LexicalVisitorPriority.HIGH;
     }
 
 

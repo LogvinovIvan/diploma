@@ -1,16 +1,17 @@
 package by.bsuir.fksis.poit.obfuscator.visitor.lexical.applier;
 
 import by.bsuir.fksis.poit.obfuscator.state.lexical.ConvertedClassInf;
+import by.bsuir.fksis.poit.obfuscator.util.lexical.LexicalVisitorPriority;
+import by.bsuir.fksis.poit.obfuscator.visitor.lexical.AbstarctVisitor;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
-import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.symbolsolver.javaparsermodel.JavaParserFacade;
 import com.github.javaparser.symbolsolver.model.typesystem.Type;
 
 
-public class ApplierRenameClassVisitor extends VoidVisitorAdapter<JavaParserFacade> {
+public class ApplierRenameClassVisitor extends AbstarctVisitor {
 
     private ConvertedClassInf convertedClassInf;
 
@@ -176,4 +177,8 @@ public class ApplierRenameClassVisitor extends VoidVisitorAdapter<JavaParserFaca
     }
 
 
+    @Override
+    public LexicalVisitorPriority getPriority() {
+        return LexicalVisitorPriority.MID;
+    }
 }

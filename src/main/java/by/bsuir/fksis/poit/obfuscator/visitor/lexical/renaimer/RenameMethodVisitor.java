@@ -2,10 +2,11 @@ package by.bsuir.fksis.poit.obfuscator.visitor.lexical.renaimer;
 
 import by.bsuir.fksis.poit.obfuscator.state.lexical.LexicalClassNameInf;
 import by.bsuir.fksis.poit.obfuscator.util.comparator.MethodUsageComparator;
+import by.bsuir.fksis.poit.obfuscator.util.lexical.LexicalVisitorPriority;
+import by.bsuir.fksis.poit.obfuscator.visitor.lexical.AbstarctVisitor;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
-import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.github.javaparser.symbolsolver.javaparsermodel.JavaParserFacade;
 import com.github.javaparser.symbolsolver.model.methods.MethodUsage;
 import com.github.javaparser.symbolsolver.model.typesystem.Type;
@@ -14,7 +15,7 @@ import org.apache.commons.lang.RandomStringUtils;
 import java.util.*;
 
 
-public class RenameMethodVisitor extends VoidVisitorAdapter<JavaParserFacade> {
+public class RenameMethodVisitor extends AbstarctVisitor {
 
     private final int METHOD_LENGTH_NAME = 20;
 
@@ -110,4 +111,8 @@ public class RenameMethodVisitor extends VoidVisitorAdapter<JavaParserFacade> {
 
     }
 
+    @Override
+    public LexicalVisitorPriority getPriority() {
+        return LexicalVisitorPriority.MID;
+    }
 }

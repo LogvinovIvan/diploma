@@ -14,11 +14,12 @@ import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 /**
  * Created by Иван on 09.05.2017.
  */
-public class FileChooserController {
+public class FileChooserController implements FilterController {
 
     private String srcPath;
     private String libPath;
@@ -75,7 +76,7 @@ public class FileChooserController {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File file = directoryChooser.showDialog(new Stage());
         savePath = file.getAbsolutePath();
-        srcPathText.setText(savePath);
+        savePathText.setText(savePath);
         Connector.setSave(savePath);
     }
 
@@ -99,7 +100,7 @@ public class FileChooserController {
 
     @FXML
     public void handleNextButton(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/FormatingObfuscateWindow.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/files.fxml"));
 
         Stage currentStage = (Stage) savePathText.getScene().getWindow();
         currentStage.close();
@@ -110,5 +111,8 @@ public class FileChooserController {
         stage.show();
     }
 
-
+    @Override
+    public URL getFxmlUrl() {
+        return getClass().getResource("/fxml/files.fxml");
+    }
 }

@@ -27,6 +27,8 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="JavaObfuscater" target="1.8" />
+      <module name="lexical" target="1.8" />
+      <module name="lexical-plugin" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

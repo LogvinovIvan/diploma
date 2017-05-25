@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="400.0" prefWidth="315.0" xmlns="http://javafx.com/javafx/8.0.112"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="by.bsuir.fksis.poit.obfuscator.controller.StartController">
+    <children>
+        <Pane prefHeight="400.0" prefWidth="390.0">
+            <children>
+                <Label layoutX="102.0" layoutY="32.0" prefHeight="33.0" prefWidth="141.0" text="Java Src obfuccator">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                </Label>
+                <Label layoutX="73.0" layoutY="83.0" prefHeight="26.0" prefWidth="45.0" text="Author:"/>
+                <Label layoutX="125.0" layoutY="88.0" prefHeight="17.0" prefWidth="97.0" text="Ivan Lohvinau"/>
+                <TextArea layoutX="73.0" layoutY="123.0" prefHeight="87.0" prefWidth="200.0"
+                          text="This program obfuscate java code.  &#10;This program contains lexical &#10;algoritms of obfuscation."/>
+                <Label layoutX="75.0" layoutY="234.0" text="email:"/>
+                <Label layoutX="126.0" layoutY="234.0" text="logvi2205@outlook.com"/>
+                <Label layoutX="77.0" layoutY="274.0" text="Build time : May 20 2017"/>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>
