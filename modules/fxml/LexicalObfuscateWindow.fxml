@@ -5,23 +5,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="261.0" prefWidth="292.0" xmlns="http://javafx.com/javafx/8.0.76-ea"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="by.bsuir.fksis.poit.obfuscator.controller.RenameClassComponentController">
+<AnchorPane prefHeight="261.0" prefWidth="292.0" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="by.bsuir.fksis.poit.obfuscator.controller.RenameClassComponentController">
     <children>
         <Pane layoutY="1.0" prefHeight="281.0" prefWidth="292.0">
             <children>
-                <Button fx:id="nextPage" layoutX="79.0" layoutY="200.0" mnemonicParsing="false"
-                        onAction="#handleNextButton" prefHeight="25.0" prefWidth="78.0" text="Next"/>
-                <CheckBox fx:id="renameFieldCheckBox" layoutX="79.0" layoutY="59.0" mnemonicParsing="false"
-                          onAction="#handleRenameFieldCheckBox" prefHeight="25.0" prefWidth="166.0"
-                          text="Rename Filelds"/>
-                <CheckBox fx:id="renameMethodCheckBox" layoutX="79.0" layoutY="106.0" mnemonicParsing="false"
-                          onAction="#handleRenameMethodCheckBox" prefHeight="25.0" prefWidth="166.0"
-                          text="Rename methods"/>
-                <CheckBox fx:id="renameClassCheckBox" layoutX="79.0" layoutY="145.0" mnemonicParsing="false"
-                          onAction="#handleRanameClassCheckBox" prefHeight="17.0" prefWidth="166.0"
-                          text="Rename classes"/>
+                <Button fx:id="nextPage" layoutX="79.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleNextButton" prefHeight="25.0" prefWidth="78.0" text="Next" />
+                <CheckBox fx:id="renameFieldCheckBox" layoutX="79.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleRenameFieldCheckBox" prefHeight="25.0" prefWidth="166.0" text="Rename Filelds" />
+                <CheckBox fx:id="renameMethodCheckBox" layoutX="79.0" layoutY="106.0" mnemonicParsing="false" onAction="#handleRenameMethodCheckBox" prefHeight="25.0" prefWidth="166.0" text="Rename methods" />
+                <CheckBox fx:id="renameClassCheckBox" layoutX="79.0" layoutY="145.0" mnemonicParsing="false" onAction="#handleRanameClassCheckBox" prefHeight="17.0" prefWidth="166.0" text="Rename classes" />
             </children>
         </Pane>
     </children>

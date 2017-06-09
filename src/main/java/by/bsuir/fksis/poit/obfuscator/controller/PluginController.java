@@ -7,10 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -54,6 +51,8 @@ public class PluginController implements Initializable {
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.YES) {
+            Plugin selectedItem = tableView.getSelectionModel().getSelectedItem();
+            tableView.getItems().remove(selectedItem);
             pluginManager.deletePlugin();
         }
     }

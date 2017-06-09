@@ -3,6 +3,7 @@ package by.bsuir.fksis.poit.obfuscator.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,15 +16,19 @@ import org.apache.commons.lang.StringUtils;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * Created by Иван on 09.05.2017.
  */
-public class FileChooserController implements FilterController {
+public class FileChooserController implements FilterController, Initializable {
 
     private String srcPath;
     private String libPath;
     private String savePath;
+
+    private boolean srcChecked;
+    private boolean saveChecked;
 
     public FileChooserController() throws IOException {
 
@@ -37,6 +42,9 @@ public class FileChooserController implements FilterController {
 
     @FXML
     private Button buttonChooseSavePath = new Button();
+
+    @FXML
+    private Button nextButton = new Button();
 
     @FXML
     private CheckBox checkDefaultSaveDir = new CheckBox();
@@ -59,6 +67,8 @@ public class FileChooserController implements FilterController {
         srcPathText.setText(srcPath);
         srcPathText.setDisable(true);
         Connector.setSrc(srcPath);
+        srcChecked = true;
+        updateButton();
     }
 
 
@@ -69,6 +79,7 @@ public class FileChooserController implements FilterController {
         libPath = file.getAbsolutePath();
         libPathText.setText(libPath);
         Connector.setLib(libPath);
+        updateButton();
     }
 
     @FXML
@@ -78,41 +89,62 @@ public class FileChooserController implements FilterController {
         savePath = file.getAbsolutePath();
         savePathText.setText(savePath);
         Connector.setSave(savePath);
+        saveChecked = true;
+        updateButton();
     }
 
     @FXML
     private void handleDefaultPath(ActionEvent event) {
-        if (checkDefaultSaveDir.isSelected()) {
-            savePathText.setText(srcPath);
-            savePathText.setDisable(true);
-            buttonChooseSavePath.setDisable(true);
-            savePath = srcPath;
-
-        } else {
-            savePathText.setText(StringUtils.EMPTY);
-            savePathText.setDisable(false);
-            buttonChooseSavePath.setDisable(false);
-            savePath = StringUtils.EMPTY;
+        if(srcChecked){
+            if (checkDefaultSaveDir.isSelected()) {
+                savePathText.setText(srcPath);
+                savePathText.setDisable(true);
+                buttonChooseSavePath.setDisable(true);
+                savePath = srcPath;
+                saveChecked = true;
+            } else {
+                savePathText.setText(StringUtils.EMPTY);
+                savePathText.setDisable(false);
+                buttonChooseSavePath.setDisable(false);
+                savePath = StringUtils.EMPTY;
+                saveChecked = false;
+            }
+            Connector.setSave(savePath);
 
         }
-        Connector.setSave(savePath);
+        updateButton();
     }
 
     @FXML
     public void handleNextButton(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/files.fxml"));
+        if(srcChecked && saveChecked){
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/files.fxml"));
 
-        Stage currentStage = (Stage) savePathText.getScene().getWindow();
-        currentStage.close();
+            Stage currentStage = (Stage) savePathText.getScene().getWindow();
+            currentStage.close();
 
-        Stage stage = new Stage();
-        stage.setTitle("Formating obfuscate config ");
-        stage.setScene(new Scene(root, 500, 500));
-        stage.show();
+            Stage stage = new Stage();
+            stage.setTitle("Formating obfuscate config ");
+            stage.setScene(new Scene(root, 500, 500));
+            stage.show();
+        }
     }
 
     @Override
     public URL getFxmlUrl() {
         return getClass().getResource("/fxml/files.fxml");
+    }
+
+    private void updateButton(){
+        if(saveChecked && srcChecked){
+            nextButton.setDisable(false);
+        }else {
+            nextButton.setDisable(true);
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        nextButton.setDisable(true);
     }
 }
