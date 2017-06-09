@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class WindowManager {
     private Map<Class, URL> bindingOfFilterWindows = new HashMap<>();
-    private Class initControllerClass = SyntaxPageController.class;
+    private Class initControllerClass = FormatPageController.class;
     private URL initUrl = getClass().getResource("/fxml/ProgressObfuscationWindow.fxml");
 
     private static WindowManager instance;

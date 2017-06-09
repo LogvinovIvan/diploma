@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Иван on 09.04.2017.
  */
-public class SyntaxPageController implements Initializable {
+public class FormatPageController implements Initializable {
 
     private TreeSet<AbstractObfuscator> abstractObfuscatorPrioritySet = new TreeSet<>(new ObfuscatorComparator());
     private List<File> filesInFolder;

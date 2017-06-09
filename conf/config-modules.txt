@@ -1,0 +1,1 @@
+Lexical Obfuscator::by.bsuir.fksis.poit.obfuscator.controller.RenameClassComponentController::LexicalObfuscateWindow.fxml

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.Pane?>
 <AnchorPane prefHeight="329.0" prefWidth="476.0" xmlns="http://javafx.com/javafx/8.0.76-ea"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="by.bsuir.fksis.poit.obfuscator.controller.SyntaxPageController">
+            fx:controller="by.bsuir.fksis.poit.obfuscator.controller.FormatPageController">
     <children>
         <Pane layoutY="1.0" prefHeight="329.0" prefWidth="476.0">
             <children>
